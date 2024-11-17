@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="112dp"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@id/calendar_image">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/calendar_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="name"
+                android:textAppearance="?textAppearanceListItem"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/calendar_episodeNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/calendar_name"
+                android:layout_marginTop="4dp"
+                android:text="episodeNum"
+                android:textAppearance="?textAppearanceCaption"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/calendar_seasonNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/calendar_episodeNum"
+                android:layout_marginTop="2dp"
+
+                android:textAppearance="?textAppearanceCaption"
+                android:text="seasonNum" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/calendar_air_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/calendar_seasonNum"
+                android:textAppearance="?textAppearanceCaption"
+                android:layout_marginTop="2dp"
+                android:text="air_date" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/calendar_days_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/calendar_air_date"
+                android:layout_marginTop="8dp"
+                android:text="days left"
+                android:textAppearance="?textAppearanceListItemSmall"
+                />
+
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/calendar_image"
+            android:layout_width="96dp"
+            android:layout_height="112dp"
+            android:background="@drawable/image_border"
+            />
+
+
+    </RelativeLayout>
+
+
+
+
