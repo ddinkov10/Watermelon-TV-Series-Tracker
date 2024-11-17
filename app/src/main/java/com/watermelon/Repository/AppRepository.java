@@ -32,7 +32,7 @@ import com.watermelon.Repository.TvSeriesEpisodeRepository.dao.TvSeriesEpisodeDa
 import com.watermelon.Repository.TvSeriesFullRepository.dao.TvSeriesFullDao;
 import com.watermelon.Repository.TvSeriesGenre.TvSeriesGenreDao;
 import com.watermelon.Repository.TvSeriesPicturesRepository.TvSeriesPicturesDao;
-import com.watermelon.Repository.TvSeriesRepository.TvSeriesDao;
+import com.watermelon.Repository.TvSeriesRepository.dao.TvSeriesDao;
 import com.watermelon.UI.WatermelonActivity;
 import com.watermelon.Repository.AppRepoHelpClasses.NetworkBoundResource;
 import com.watermelon.Repository.AppRepoHelpClasses.Resource;

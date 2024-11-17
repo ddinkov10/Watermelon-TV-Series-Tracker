@@ -20,16 +20,24 @@ import com.watermelon.Repository.TvSeriesFullRepository.datasource.LocalTvSeries
 import com.watermelon.Repository.TvSeriesFullRepository.TvSeriesFullRepositoryImpl;
 import com.watermelon.Repository.TvSeriesFullRepository.datasource.RemoteTvSeriesFullDataSource;
 import com.watermelon.Repository.TvSeriesFullRepository.datasource.RemoteTvSeriesFullDataSourceImpl;
+import com.watermelon.Repository.TvSeriesRepository.TvSeriesRepositoryImpl;
+import com.watermelon.Repository.TvSeriesRepository.datasource.LocalTvSeriesDataSource;
+import com.watermelon.Repository.TvSeriesRepository.datasource.LocalTvSeriesDataSourceImpl;
 import com.watermelon.WatermelonApplication;
+import com.watermelon.domain.AddToWatchlistUseCase.AddToWatchlistUseCase;
+import com.watermelon.domain.AddToWatchlistUseCase.AddToWatchlistUseCaseImpl;
 import com.watermelon.domain.ChangeEpisodeWatchedFlagUseCase.ChangeEpisodeWatchedFlagUseCase;
 import com.watermelon.domain.ChangeEpisodeWatchedFlagUseCase.ChangeEpisodeWatchedFlagUseCaseImpl;
 import com.watermelon.domain.GetWatchlistUseCase.GetWatchlistUseCase;
 import com.watermelon.domain.GetWatchlistUseCase.GetWatchlistUseCaseImpl;
+import com.watermelon.domain.RemoveFromWatchlistUseCase.RemoveFromWatchlistUseCase;
+import com.watermelon.domain.RemoveFromWatchlistUseCase.RemoveFromWatchlistUseCaseImpl;
 import com.watermelon.domain.common.UseCaseHandler;
 import com.watermelon.domain.common.UseCaseHandlerImpl;
 import com.watermelon.domain.common.UseCaseThreadPoolScheduler;
 import com.watermelon.domain.repository.TvSeriesEpisodeRepository;
 import com.watermelon.domain.repository.TvSeriesFullRepository;
+import com.watermelon.domain.repository.TvSeriesRepository;
 import com.watermelon.domain.usecase.FetchAndSaveTvSeriesDetailsUseCase;
 import com.watermelon.domain.usecase.FetchAndSaveTvSeriesDetailsUseCaseImpl;
 import com.watermelon.domain.usecase.FetchTvSeriesDetailsUseCase;
@@ -46,6 +54,27 @@ import retrofit2.Retrofit;
 
 
 public class Injection extends InjectionBase {
+
+    public static RemoveFromWatchlistUseCase provideRemoveFromWatchlistUseCase() {
+        return new RemoveFromWatchlistUseCaseImpl(provideTvSeriesRepository());
+    }
+
+    public static AddToWatchlistUseCase provideAddToWatchlistUseCase() {
+        return new AddToWatchlistUseCaseImpl(provideTvSeriesRepository());
+    }
+
+    public static TvSeriesRepository provideTvSeriesRepository() {
+        return provideSingleton(TvSeriesRepository.class, new SingletonFactory<TvSeriesRepository>() {
+            @Override
+            public TvSeriesRepository create() {
+                return new TvSeriesRepositoryImpl(provideLocalTvSeriesDataSource());
+            }
+        });
+    }
+
+    public static LocalTvSeriesDataSource provideLocalTvSeriesDataSource() {
+        return new LocalTvSeriesDataSourceImpl(provideAppDatabase());
+    }
 
 
     public static FetchAndSaveTvSeriesDetailsUseCase provideFetchAndSaveTvSeriesDetailsUseCase() {

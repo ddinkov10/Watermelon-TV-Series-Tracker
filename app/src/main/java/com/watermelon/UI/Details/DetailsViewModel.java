@@ -8,7 +8,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.watermelon.Models.TvSeriesFull;
 import com.watermelon.UI.UiState;
+import com.watermelon.domain.AddToWatchlistUseCase.AddToWatchlistUseCase;
 import com.watermelon.domain.ChangeEpisodeWatchedFlagUseCase.ChangeEpisodeWatchedFlagUseCase;
+import com.watermelon.domain.RemoveFromWatchlistUseCase.RemoveFromWatchlistUseCase;
 import com.watermelon.domain.common.UseCaseHandler;
 import com.watermelon.domain.usecase.FetchAndSaveTvSeriesDetailsUseCase;
 import com.watermelon.domain.usecase.FetchTvSeriesDetailsUseCase;
@@ -25,16 +27,22 @@ public class DetailsViewModel extends ViewModel {
 
     private final ChangeEpisodeWatchedFlagUseCase changeEpisodeWatchedFlagUseCase;
 
+    private final AddToWatchlistUseCase addToWatchlistUseCase;
+
+    private final RemoveFromWatchlistUseCase removeFromWatchlistUseCase;
+
     private final MutableLiveData<UiState> uiState;
     private final MutableLiveData<TvSeriesFull> detailsObservable;
     private final MutableLiveData<Integer> tvSeriesId;
 
-    public DetailsViewModel(UseCaseHandler useCaseHandler, FetchAndSaveTvSeriesDetailsUseCase fetchAndSaveTvSeriesDetailsUseCase, GetTvSeriesDetailsUseCase getTvSeriesDetailsUseCase, ChangeEpisodeWatchedFlagUseCase changeEpisodeWatchedFlagUseCase) {
+    public DetailsViewModel(UseCaseHandler useCaseHandler, FetchAndSaveTvSeriesDetailsUseCase fetchAndSaveTvSeriesDetailsUseCase, GetTvSeriesDetailsUseCase getTvSeriesDetailsUseCase, ChangeEpisodeWatchedFlagUseCase changeEpisodeWatchedFlagUseCase, AddToWatchlistUseCase addToWatchlistUseCase, RemoveFromWatchlistUseCase removeFromWatchlistUseCase) {
 
         this.useCaseHandler = useCaseHandler;
         this.fetchAndSaveTvSeriesDetailsUseCase = fetchAndSaveTvSeriesDetailsUseCase;
         this.getTvSeriesDetailsUseCase = getTvSeriesDetailsUseCase;
         this.changeEpisodeWatchedFlagUseCase = changeEpisodeWatchedFlagUseCase;
+        this.addToWatchlistUseCase = addToWatchlistUseCase;
+        this.removeFromWatchlistUseCase = removeFromWatchlistUseCase;
 
         uiState = new MutableLiveData<>();
         tvSeriesId = new MutableLiveData<>();
@@ -101,6 +109,34 @@ public class DetailsViewModel extends ViewModel {
     }
 
     void changeTvSeriesWatchedFlag(Pair<Integer, Boolean> params) {
+        int id = params.first;
+        boolean isChecked = params.second;
+
+        if(isChecked) {
+            useCaseHandler.execute(addToWatchlistUseCase, new AddToWatchlistUseCase.RequestValues(id), new UseCaseHandler.UseCaseCallback<AddToWatchlistUseCase.ResponseValue>() {
+                @Override
+                public void onSuccess(AddToWatchlistUseCase.ResponseValue response) {
+
+                }
+
+                @Override
+                public void onError(Exception exception) {
+                    throw new RuntimeException(exception);
+                }
+            });
+        }else {
+            useCaseHandler.execute(removeFromWatchlistUseCase, new RemoveFromWatchlistUseCase.RequestValues(id), new UseCaseHandler.UseCaseCallback<RemoveFromWatchlistUseCase.ResponseValue>() {
+                @Override
+                public void onSuccess(RemoveFromWatchlistUseCase.ResponseValue response) {
+
+                }
+
+                @Override
+                public void onError(Exception exception) {
+
+                }
+            });
+        }
         useCaseHandler.execute(changeEpisodeWatchedFlagUseCase, new ChangeEpisodeWatchedFlagUseCase.RequestValues(params), new UseCaseHandler.UseCaseCallback<ChangeEpisodeWatchedFlagUseCase.ResponseValue>() {
             @Override
             public void onSuccess(ChangeEpisodeWatchedFlagUseCase.ResponseValue response) {

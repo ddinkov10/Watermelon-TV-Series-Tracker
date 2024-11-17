@@ -3,7 +3,6 @@ package com.watermelon.Repository.TvSeriesFullRepository.datasource;
 import android.util.Log;
 
 import com.watermelon.Helpers.DateHelper;
-import com.watermelon.Helpers.TvSeriesHelper;
 import com.watermelon.Models.TvSeries;
 import com.watermelon.Models.TvSeriesEpisode;
 import com.watermelon.Models.TvSeriesFull;
@@ -13,7 +12,7 @@ import com.watermelon.Repository.AppDatabase;
 import com.watermelon.Repository.TvSeriesEpisodeRepository.dao.TvSeriesEpisodeDao;
 import com.watermelon.Repository.TvSeriesGenre.TvSeriesGenreDao;
 import com.watermelon.Repository.TvSeriesPicturesRepository.TvSeriesPicturesDao;
-import com.watermelon.Repository.TvSeriesRepository.TvSeriesDao;
+import com.watermelon.Repository.TvSeriesRepository.dao.TvSeriesDao;
 
 import java.util.Collections;
 import java.util.Comparator;

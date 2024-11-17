@@ -1,4 +1,4 @@
-package com.watermelon.Repository.TvSeriesRepository;
+package com.watermelon.Repository.TvSeriesRepository.dao;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -31,6 +31,12 @@ public interface TvSeriesDao {
     @Query("UPDATE tv_series_table SET tv_series_flag=:watchingId WHERE tv_series_api_id IN(:id)")
     void updateTvSeriesWatchedFlag(int id, boolean watchingId);
 
+
+    @Query("UPDATE tv_series_table SET tv_series_flag=1 WHERE tv_series_api_id IN(:id)")
+    void addTvSeriesToWatchlist(int id);
+
+    @Query("UPDATE tv_series_table SET tv_series_flag=0 WHERE tv_series_api_id IN(:id)")
+    void removeTvSeriesFromWatchlist(int id);
 
     @Query("SELECT * FROM tv_series_table WHERE tv_series_id=:Id")
     TvSeries getTvSeriesById(int Id);

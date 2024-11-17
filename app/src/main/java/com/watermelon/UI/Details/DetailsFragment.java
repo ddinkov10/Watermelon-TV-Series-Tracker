@@ -81,7 +81,9 @@ public class DetailsFragment extends Fragment implements DetailsSeasonsAdapter.O
                 Injection.provideUseCaseHandler(),
                 Injection.provideFetchAndSaveTvSeriesDetailsUseCase(),
                 Injection.provideGetTvSeriesDetailsUseCase(),
-                Injection.provideChangeEpisodeWatchedFlagUseCase()
+                Injection.provideChangeEpisodeWatchedFlagUseCase(),
+                Injection.provideAddToWatchlistUseCase(),
+                Injection.provideRemoveFromWatchlistUseCase()
         );
         detailsSeasonsAdapter = new DetailsSeasonsAdapter();
         detailsPicturesViewPagerAdapter = new DetailsPicturesViewPagerAdapter();

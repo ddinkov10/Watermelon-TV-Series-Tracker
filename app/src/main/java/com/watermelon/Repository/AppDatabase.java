@@ -14,7 +14,7 @@ import com.watermelon.Repository.TvSeriesEpisodeRepository.dao.TvSeriesEpisodeDa
 import com.watermelon.Repository.TvSeriesFullRepository.dao.TvSeriesFullDao;
 import com.watermelon.Repository.TvSeriesGenre.TvSeriesGenreDao;
 import com.watermelon.Repository.TvSeriesPicturesRepository.TvSeriesPicturesDao;
-import com.watermelon.Repository.TvSeriesRepository.TvSeriesDao;
+import com.watermelon.Repository.TvSeriesRepository.dao.TvSeriesDao;
 
 
 @Database(entities = {TvSeries.class, TvSeriesEpisode.class, TvSeriesPicture.class, TvSeriesGenre.class}, version = 1)

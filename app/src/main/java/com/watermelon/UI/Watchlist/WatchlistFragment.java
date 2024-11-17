@@ -58,6 +58,7 @@ public class WatchlistFragment extends Fragment implements WatchlistAdapter.OnIt
         recyclerView = view.findViewById(R.id.watchlist_recycler_view);
         recyclerView.setHasFixedSize(true);
         emptyLayout = view.findViewById(R.id.emptystatelayout);
+        watchlistViewModel.loadWatchlist();
         return view;
     }
 

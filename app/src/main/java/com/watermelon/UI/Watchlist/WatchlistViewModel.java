@@ -34,7 +34,11 @@ public class WatchlistViewModel extends ViewModel {
 
     }
 
-    private void loadWatchlist() {
+    public void loadWatchlist() {
+        loadWatchlistInternal();
+    }
+
+    private void loadWatchlistInternal() {
         useCaseHandler.execute(getWatchlistUseCase, new GetWatchlistUseCase.RequestValues(WatermelonActivity.TVSERIES_WATCHED_FLAG_YES), new UseCaseHandler.UseCaseCallback<GetWatchlistUseCase.ResponseValue>() {
             @Override
             public void onSuccess(GetWatchlistUseCase.ResponseValue response) {
