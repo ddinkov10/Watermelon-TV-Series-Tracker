@@ -1,9 +1,7 @@
-package com.watermelon.domain.GetWatchlistUseCase;
-
-import androidx.lifecycle.LiveData;
+package com.watermelon.domain.usecase;
 
 import com.watermelon.Models.TvSeriesFull;
-import com.watermelon.domain.common.UseCase;
+import com.watermelon.UI.framework.common.UseCase;
 
 import java.util.List;
 

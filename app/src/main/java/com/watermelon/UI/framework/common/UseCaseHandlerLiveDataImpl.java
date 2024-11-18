@@ -1,4 +1,4 @@
-package com.watermelon.domain.common;
+package com.watermelon.UI.framework.common;
 
 public class UseCaseHandlerLiveDataImpl implements UseCaseHandler{
 

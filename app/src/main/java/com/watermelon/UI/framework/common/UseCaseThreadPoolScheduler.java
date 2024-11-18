@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.watermelon.domain.common;
+package com.watermelon.UI.framework.common;
 
 import android.os.Handler;
 

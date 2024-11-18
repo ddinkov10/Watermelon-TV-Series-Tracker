@@ -1,6 +1,6 @@
-package com.watermelon.domain.RemoveFromWatchlistUseCase;
+package com.watermelon.domain.usecase;
 
-import com.watermelon.domain.common.UseCase;
+import com.watermelon.UI.framework.common.UseCase;
 
 public interface RemoveFromWatchlistUseCase extends UseCase<RemoveFromWatchlistUseCase.RequestValues, RemoveFromWatchlistUseCase.ResponseValue> {
 

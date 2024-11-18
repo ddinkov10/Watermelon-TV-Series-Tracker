@@ -1,7 +1,4 @@
-package com.watermelon.domain.common;
-
-
-import android.util.Log;
+package com.watermelon.UI.framework.common;
 
 
 /**

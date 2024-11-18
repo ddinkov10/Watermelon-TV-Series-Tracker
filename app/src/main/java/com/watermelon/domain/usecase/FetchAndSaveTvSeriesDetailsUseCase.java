@@ -1,7 +1,6 @@
 package com.watermelon.domain.usecase;
 
-import com.watermelon.Models.TvSeriesFull;
-import com.watermelon.domain.common.UseCase;
+import com.watermelon.UI.framework.common.UseCase;
 
 public interface FetchAndSaveTvSeriesDetailsUseCase extends UseCase<FetchAndSaveTvSeriesDetailsUseCase.RequestValues, FetchAndSaveTvSeriesDetailsUseCase.ResponseValue> {
 

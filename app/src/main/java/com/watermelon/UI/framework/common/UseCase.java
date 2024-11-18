@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.watermelon.domain.common;
+package com.watermelon.UI.framework.common;
 
 /**
  * Use cases are the entry points to the domain layer.

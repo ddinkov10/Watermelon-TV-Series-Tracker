@@ -1,6 +1,6 @@
-package com.watermelon.domain.AddToWatchlistUseCase;
+package com.watermelon.domain.usecase;
 
-import com.watermelon.domain.common.UseCase;
+import com.watermelon.UI.framework.common.UseCase;
 
 public interface AddToWatchlistUseCase extends UseCase<AddToWatchlistUseCase.RequestValues, AddToWatchlistUseCase.ResponseValue> {
 

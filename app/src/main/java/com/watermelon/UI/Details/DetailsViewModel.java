@@ -8,12 +8,11 @@ import androidx.lifecycle.ViewModel;
 
 import com.watermelon.Models.TvSeriesFull;
 import com.watermelon.UI.UiState;
-import com.watermelon.domain.AddToWatchlistUseCase.AddToWatchlistUseCase;
-import com.watermelon.domain.ChangeEpisodeWatchedFlagUseCase.ChangeEpisodeWatchedFlagUseCase;
-import com.watermelon.domain.RemoveFromWatchlistUseCase.RemoveFromWatchlistUseCase;
-import com.watermelon.domain.common.UseCaseHandler;
+import com.watermelon.domain.usecase.AddToWatchlistUseCase;
+import com.watermelon.domain.usecase.ChangeEpisodeWatchedFlagUseCase;
+import com.watermelon.domain.usecase.RemoveFromWatchlistUseCase;
+import com.watermelon.UI.framework.common.UseCaseHandler;
 import com.watermelon.domain.usecase.FetchAndSaveTvSeriesDetailsUseCase;
-import com.watermelon.domain.usecase.FetchTvSeriesDetailsUseCase;
 import com.watermelon.domain.usecase.GetTvSeriesDetailsUseCase;
 
 import java.util.List;

@@ -7,7 +7,6 @@ import androidx.room.Room;
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory;
 
 import com.watermelon.Common.injection.framework.InjectionBase;
-import com.watermelon.Repository.Api.ApiBuilder;
 import com.watermelon.Repository.Api.ApiModels.RetrofitModule;
 import com.watermelon.Repository.Api.ApiModels.RetrofitModuleImpl;
 import com.watermelon.Repository.Api.ApiService;
@@ -24,17 +23,17 @@ import com.watermelon.Repository.TvSeriesRepository.TvSeriesRepositoryImpl;
 import com.watermelon.Repository.TvSeriesRepository.datasource.LocalTvSeriesDataSource;
 import com.watermelon.Repository.TvSeriesRepository.datasource.LocalTvSeriesDataSourceImpl;
 import com.watermelon.WatermelonApplication;
-import com.watermelon.domain.AddToWatchlistUseCase.AddToWatchlistUseCase;
-import com.watermelon.domain.AddToWatchlistUseCase.AddToWatchlistUseCaseImpl;
-import com.watermelon.domain.ChangeEpisodeWatchedFlagUseCase.ChangeEpisodeWatchedFlagUseCase;
-import com.watermelon.domain.ChangeEpisodeWatchedFlagUseCase.ChangeEpisodeWatchedFlagUseCaseImpl;
-import com.watermelon.domain.GetWatchlistUseCase.GetWatchlistUseCase;
-import com.watermelon.domain.GetWatchlistUseCase.GetWatchlistUseCaseImpl;
-import com.watermelon.domain.RemoveFromWatchlistUseCase.RemoveFromWatchlistUseCase;
-import com.watermelon.domain.RemoveFromWatchlistUseCase.RemoveFromWatchlistUseCaseImpl;
-import com.watermelon.domain.common.UseCaseHandler;
-import com.watermelon.domain.common.UseCaseHandlerImpl;
-import com.watermelon.domain.common.UseCaseThreadPoolScheduler;
+import com.watermelon.domain.usecase.AddToWatchlistUseCase;
+import com.watermelon.domain.usecase.AddToWatchlistUseCaseImpl;
+import com.watermelon.domain.usecase.ChangeEpisodeWatchedFlagUseCase;
+import com.watermelon.domain.usecase.ChangeEpisodeWatchedFlagUseCaseImpl;
+import com.watermelon.domain.usecase.GetWatchlistUseCase;
+import com.watermelon.domain.usecase.GetWatchlistUseCaseImpl;
+import com.watermelon.domain.usecase.RemoveFromWatchlistUseCase;
+import com.watermelon.domain.usecase.RemoveFromWatchlistUseCaseImpl;
+import com.watermelon.UI.framework.common.UseCaseHandler;
+import com.watermelon.UI.framework.common.UseCaseHandlerImpl;
+import com.watermelon.UI.framework.common.UseCaseThreadPoolScheduler;
 import com.watermelon.domain.repository.TvSeriesEpisodeRepository;
 import com.watermelon.domain.repository.TvSeriesFullRepository;
 import com.watermelon.domain.repository.TvSeriesRepository;
@@ -50,7 +49,6 @@ import com.watermelon.domain.usecase.SaveTvSeriesDetailsUseCaseImpl;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
-import retrofit2.Retrofit;
 
 
 public class Injection extends InjectionBase {

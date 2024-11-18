@@ -1,19 +1,19 @@
-package com.watermelon.domain.AddToWatchlistUseCase;
+package com.watermelon.domain.usecase;
 
 import com.watermelon.domain.repository.TvSeriesRepository;
 
-public class AddToWatchlistUseCaseImpl implements AddToWatchlistUseCase {
+public class RemoveFromWatchlistUseCaseImpl implements RemoveFromWatchlistUseCase {
 
     private final TvSeriesRepository tvSeriesRepository;
 
-    public AddToWatchlistUseCaseImpl(TvSeriesRepository tvSeriesRepository) {
+    public RemoveFromWatchlistUseCaseImpl(TvSeriesRepository tvSeriesRepository) {
         this.tvSeriesRepository = tvSeriesRepository;
     }
 
     @Override
     public ResponseValue executeUseCase(RequestValues requestValues) {
         int id = requestValues.getId();
-        tvSeriesRepository.addToWatchlist(id);
+        tvSeriesRepository.removeFromWatchlist(id);
         return null;
     }
 }

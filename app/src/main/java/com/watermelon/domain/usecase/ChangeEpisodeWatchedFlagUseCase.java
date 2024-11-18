@@ -1,11 +1,8 @@
-package com.watermelon.domain.ChangeEpisodeWatchedFlagUseCase;
+package com.watermelon.domain.usecase;
 
 import android.util.Pair;
 
-import com.watermelon.Models.TvSeriesFull;
-import com.watermelon.domain.common.UseCase;
-
-import java.util.List;
+import com.watermelon.UI.framework.common.UseCase;
 
 public interface ChangeEpisodeWatchedFlagUseCase extends UseCase<ChangeEpisodeWatchedFlagUseCase.RequestValues, ChangeEpisodeWatchedFlagUseCase.ResponseValue> {
 

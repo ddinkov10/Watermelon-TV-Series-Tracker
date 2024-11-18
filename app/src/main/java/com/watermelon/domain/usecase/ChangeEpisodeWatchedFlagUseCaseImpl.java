@@ -1,4 +1,4 @@
-package com.watermelon.domain.ChangeEpisodeWatchedFlagUseCase;
+package com.watermelon.domain.usecase;
 
 import com.watermelon.domain.repository.TvSeriesEpisodeRepository;
 
