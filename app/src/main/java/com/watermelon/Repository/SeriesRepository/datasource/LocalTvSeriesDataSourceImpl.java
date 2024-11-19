@@ -1,4 +1,4 @@
-package com.watermelon.Repository.TvSeriesRepository.datasource;
+package com.watermelon.Repository.SeriesRepository.datasource;
 
 import com.watermelon.Repository.AppDatabase;
 
@@ -12,11 +12,11 @@ public class LocalTvSeriesDataSourceImpl implements LocalTvSeriesDataSource {
 
     @Override
     public void addTvSeriesToWatchlist(int id) {
-        appDatabase.getTvSeriesDao().addTvSeriesToWatchlist(id);
+//        appDatabase.getTvSeriesDao().addTvSeriesToWatchlist(id);
     }
 
     @Override
     public void removeTvSeriesFromWatchlist(int id) {
-        appDatabase.getTvSeriesDao().removeTvSeriesFromWatchlist(id);
+//        appDatabase.getTvSeriesDao().removeTvSeriesFromWatchlist(id);
     }
 }

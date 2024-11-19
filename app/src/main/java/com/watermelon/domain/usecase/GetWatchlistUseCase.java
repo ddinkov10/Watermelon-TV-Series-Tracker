@@ -1,6 +1,8 @@
 package com.watermelon.domain.usecase;
 
 import com.watermelon.Models.TvSeriesFull;
+import com.watermelon.Repository.model.SeriesWithAllDetails;
+import com.watermelon.Repository.model.watchlist.WatchlistWithDetails;
 import com.watermelon.UI.framework.common.UseCase;
 
 import java.util.List;
@@ -12,26 +14,17 @@ public interface GetWatchlistUseCase extends UseCase<GetWatchlistUseCase.Request
 
     final class RequestValues implements UseCase.RequestValues {
 
-        private final boolean flag;
-
-        public RequestValues(boolean flag) {
-            this.flag = flag;
-        }
-
-        public boolean getFlag() {
-            return flag;
-        }
     }
 
     final class ResponseValue implements UseCase.ResponseValue {
 
-        private final List<TvSeriesFull> watchlistList;
+        private final WatchlistWithDetails watchlistList;
 
-        public ResponseValue(List<TvSeriesFull> watchlistList) {
+        public ResponseValue(WatchlistWithDetails watchlistList) {
             this.watchlistList = watchlistList;
         }
 
-        public List<TvSeriesFull> getWatchlistList() {
+        public WatchlistWithDetails getWatchlistList() {
             return watchlistList;
         }
     }

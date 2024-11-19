@@ -10,10 +10,12 @@ import com.watermelon.Models.TvSeriesGenre;
 import com.watermelon.Models.TvSeriesPicture;
 import com.watermelon.Repository.AppDatabase;
 import com.watermelon.Repository.TvSeriesEpisodeRepository.dao.TvSeriesEpisodeDao;
-import com.watermelon.Repository.TvSeriesGenre.TvSeriesGenreDao;
+import com.watermelon.Repository.Genre.GenreDao;
 import com.watermelon.Repository.TvSeriesPicturesRepository.TvSeriesPicturesDao;
-import com.watermelon.Repository.TvSeriesRepository.dao.TvSeriesDao;
+import com.watermelon.Repository.SeriesRepository.dao.SeriesDao;
+import com.watermelon.Repository.model.watchlist.WatchlistWithDetails;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -28,27 +30,31 @@ public class LocalTvSeriesFullDataSourceImpl implements LocalTvSeriesFullDataSou
 
     @Override
     public TvSeriesFull getTvSeriesFullById(int id) {
-        return appDatabase.getTvSeriesFullDao().getTvSeriesFullById(id);
+//        return appDatabase.getSeriesDao().get(id);
+        return new TvSeriesFull();
     }
 
     @Override
     public List<TvSeriesFull> getLocalData() {
 //        TODO: fix this
-        return appDatabase.getTvSeriesFullDao().getWatchlistTvSeriesFull();
+//        return appDatabase.getWatchlistDao().getAllWatchlistWithDetails()
+        return new ArrayList<TvSeriesFull>();
     }
 
     @Override
     public List<TvSeriesFull> getTvSeriesFullByFlag(boolean flag) {
-        return appDatabase.getTvSeriesFullDao().getTvSeriesFullByFlag(flag);
+//        return appDatabase.getTvSeriesFullDao().getTvSeriesFullByFlag(flag);
+        return new ArrayList<TvSeriesFull>();
     }
 
     @Override
     public void saveTvSeriesFull(TvSeriesFull tvSeriesFull) {
+        /*
         Log.d("", "detailsToDb");
 
-        TvSeriesDao tvSeriesDao = appDatabase.getTvSeriesDao();
+        SeriesDao seriesDao = appDatabase.getTvSeriesDao();
         TvSeriesEpisodeDao tvSeriesEpisodeDao = appDatabase.getTvSeriesEpisodeDao();
-        TvSeriesGenreDao tvSeriesGenreDao = appDatabase.getTvSeriesGenreDao();
+        GenreDao genreDao = appDatabase.getTvSeriesGenreDao();
         TvSeriesPicturesDao tvSeriesPicturesDao = appDatabase.getTvSeriesPicturesDao();
 
 
@@ -83,13 +89,13 @@ public class LocalTvSeriesFullDataSourceImpl implements LocalTvSeriesFullDataSou
         List<TvSeriesGenre> genres = tvSeriesFull.getGenres();
         List<TvSeriesPicture> pictures = tvSeriesFull.getPictures();
 
-        TvSeriesFull dbTvSeries = tvSeriesDao.getTvSeriesByApiId(id);
+        TvSeriesFull dbTvSeries = seriesDao.getTvSeriesByApiId(id);
 
         if (dbTvSeries != null) {
-            tvSeriesDao.updateTvSeriesDetails(tvSeries.getTvSeriesId(), tvSeries.getTvSeriesDesc(), tvSeries.getTvSeriesRuntime(), tvSeries.getTvSeriesYoutubeLink(), tvSeries.getTvSeriesRating());
+            seriesDao.updateTvSeriesDetails(tvSeries.getTvSeriesId(), tvSeries.getTvSeriesDesc(), tvSeries.getTvSeriesRuntime(), tvSeries.getTvSeriesYoutubeLink(), tvSeries.getTvSeriesRating());
         } else {
-            tvSeriesDao.insertTvSeries(new TvSeries(tvSeries.getTvSeriesId(), tvSeries.getTvSeriesName(), tvSeries.getTvSeriesStartDate(), tvSeries.getTvSeriesEndDate(), tvSeries.getTvSeriesCountry(), tvSeries.getTvSeriesNetwork(), tvSeries.getTvSeriesStatus(), tvSeries.getTvSeriesImagePath()));
-            tvSeriesDao.updateTvSeriesDetails(tvSeries.getTvSeriesId(), tvSeries.getTvSeriesDesc(), tvSeries.getTvSeriesRuntime(), tvSeries.getTvSeriesYoutubeLink(), tvSeries.getTvSeriesRating());
+            seriesDao.insertTvSeries(new TvSeries(tvSeries.getTvSeriesId(), tvSeries.getTvSeriesName(), tvSeries.getTvSeriesStartDate(), tvSeries.getTvSeriesEndDate(), tvSeries.getTvSeriesCountry(), tvSeries.getTvSeriesNetwork(), tvSeries.getTvSeriesStatus(), tvSeries.getTvSeriesImagePath()));
+            seriesDao.updateTvSeriesDetails(tvSeries.getTvSeriesId(), tvSeries.getTvSeriesDesc(), tvSeries.getTvSeriesRuntime(), tvSeries.getTvSeriesYoutubeLink(), tvSeries.getTvSeriesRating());
         }
 
 //        TvSeriesEpisode testEpisode = new TvSeriesEpisode(35624, 7, 1, "Test Episode", "2020-08-11");
@@ -97,7 +103,7 @@ public class LocalTvSeriesFullDataSourceImpl implements LocalTvSeriesFullDataSou
 
         if (dbTvSeries == null){
             tvSeriesEpisodeDao.insertAllTvSeriesEpisodes(episodes);
-            tvSeriesGenreDao.insertAllTvSeriesGenres(genres);
+            genreDao.insertAllTvSeriesGenres(genres);
             tvSeriesPicturesDao.insertAllTvSeriesPictures(pictures);
         }else {
             if (dbTvSeries.getEpisodes().size() == 0) {
@@ -111,12 +117,14 @@ public class LocalTvSeriesFullDataSourceImpl implements LocalTvSeriesFullDataSou
                 }
             }
             if (dbTvSeries.getGenres().size() == 0) {
-                tvSeriesGenreDao.insertAllTvSeriesGenres(genres);
+                genreDao.insertAllTvSeriesGenres(genres);
             }
             if (dbTvSeries.getPictures().size() == 0) {
                 tvSeriesPicturesDao.insertAllTvSeriesPictures(pictures);
             }
         }
+
+         */
     }
 
 

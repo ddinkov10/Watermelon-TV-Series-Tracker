@@ -31,7 +31,7 @@ public class SeasonEpisodesViewModel extends AndroidViewModel {
     }
 
     void changeEpisodeWatchedFlag(Pair<Integer, Boolean> params) {
-        repository.setTvSeriesEpisodeWatchedFlag(params);
+//        repository.setTvSeriesEpisodeWatchedFlag(params);
     }
 
 

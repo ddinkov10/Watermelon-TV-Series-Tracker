@@ -1,6 +1,6 @@
-package com.watermelon.Repository.TvSeriesRepository;
+package com.watermelon.Repository.SeriesRepository;
 
-import com.watermelon.Repository.TvSeriesRepository.datasource.LocalTvSeriesDataSource;
+import com.watermelon.Repository.SeriesRepository.datasource.LocalTvSeriesDataSource;
 import com.watermelon.domain.repository.TvSeriesRepository;
 
 public class TvSeriesRepositoryImpl implements TvSeriesRepository {

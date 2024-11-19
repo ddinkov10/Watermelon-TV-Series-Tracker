@@ -5,11 +5,12 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 
 import com.watermelon.Models.TvSeriesPicture;
+import com.watermelon.Repository.model.Image;
 
 import java.util.List;
 
 @Dao
 public interface TvSeriesPicturesDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertAllTvSeriesPictures(List<TvSeriesPicture> pictures);
+    void insertImages(List<Image> images);
 }

@@ -1,4 +1,4 @@
-package com.watermelon.Repository.TvSeriesRepository.datasource;
+package com.watermelon.Repository.SeriesRepository.datasource;
 
 public interface LocalTvSeriesDataSource {
 

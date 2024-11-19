@@ -1,8 +1,8 @@
 package com.watermelon.Repository.TvSeriesFullRepository.datasource;
 
 
-import com.watermelon.Models.TvSeriesFull;
+import com.watermelon.Repository.model.SeriesWithAllDetails;
 
 public interface RemoteTvSeriesFullDataSource {
-    TvSeriesFull fetchTvSeriesDetails(int id);
+    SeriesWithAllDetails fetchTvSeriesDetails(int id);
 }

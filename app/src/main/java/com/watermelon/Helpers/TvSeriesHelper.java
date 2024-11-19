@@ -2,23 +2,27 @@ package com.watermelon.Helpers;
 
 import com.watermelon.Models.TvSeries;
 import com.watermelon.Models.TvSeriesEpisode;
-import com.watermelon.Models.TvSeriesFull;
-import com.watermelon.Models.TvSeriesGenre;
-import com.watermelon.Models.TvSeriesPicture;
 import com.watermelon.Models.TvSeriesSeason;
 import com.watermelon.Repository.Api.ApiModels.TvSeriesBasicInfo.JsonTvSeries;
 import com.watermelon.Repository.Api.ApiModels.TvSeriesBasicInfo.JsonTvSeriesBasicRoot;
 import com.watermelon.Repository.Api.ApiModels.TvSeriesDetails.JsonEpisode;
 import com.watermelon.Repository.Api.ApiModels.TvSeriesDetails.JsonTvSeriesFull;
 import com.watermelon.Repository.Api.ApiModels.TvSeriesDetails.JsonTvSeriesFullRoot;
+import com.watermelon.Repository.model.Episode;
+import com.watermelon.Repository.model.Genre;
+import com.watermelon.Repository.model.Image;
+import com.watermelon.Repository.model.Series;
+import com.watermelon.Repository.model.SeriesWithAllDetails;
+import com.watermelon.Repository.model.mappers.DataModelMapper;
+import com.watermelon.Repository.model.watchlist.EpisodeWithWatchStatus;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TvSeriesHelper {
-    public static TvSeriesEpisode getNextWatched(List<TvSeriesEpisode> episodes) {
+    public static EpisodeWithWatchStatus getNextWatched(List<EpisodeWithWatchStatus> episodes) {
         for (int i = 0; i < episodes.size(); i++) {
-            if (!episodes.get(i).isEpisodeWatched()) {
+            if (!episodes.get(i).getWatchStatus().isWatched()) {
                 return episodes.get(i);
             }
         }
@@ -29,10 +33,10 @@ public class TvSeriesHelper {
         return tvSeries.isTvSeriesWatchingFlag();
     }
 
-    public static boolean getTvSeriesState(List<TvSeriesEpisode> episodes) {
+    public static boolean getTvSeriesState(List<EpisodeWithWatchStatus> episodes) {
         boolean state = true;
         for (int i = 0; i < episodes.size(); i++) {
-            if (!episodes.get(i).isEpisodeWatched()) {
+            if (!episodes.get(i).getWatchStatus().isWatched()) {
                 state = false;
                 return state;
             }
@@ -40,10 +44,10 @@ public class TvSeriesHelper {
         return state;
     }
 
-    public static int getEpisodeProgress(List<TvSeriesEpisode> episodes) {
+    public static int getEpisodeProgress(List<EpisodeWithWatchStatus> episodes) {
         int counter = 0;
         for (int i = 0; i < episodes.size(); i++) {
-            if (episodes.get(i).isEpisodeWatched()) {
+            if (episodes.get(i).getWatchStatus().isWatched()) {
                 counter++;
             }
         }
@@ -93,34 +97,24 @@ public class TvSeriesHelper {
         return returnTvSeries;
     }
 
-    public static TvSeriesFull jsonToModel(JsonTvSeriesFullRoot root){
+    public static SeriesWithAllDetails jsonToModel(JsonTvSeriesFullRoot root){
+        DataModelMapper mapper = new DataModelMapper();
         JsonTvSeriesFull jsonTvSeriesFull = root.getTvShow();
-        TvSeries tvSeries = new TvSeries(jsonTvSeriesFull.getId(), jsonTvSeriesFull.getName(), jsonTvSeriesFull.getStartDate(), jsonTvSeriesFull.getEndDate(), jsonTvSeriesFull.getCountry(), jsonTvSeriesFull.getNetwork(), jsonTvSeriesFull.getStatus(), jsonTvSeriesFull.getImageThumbnailPath());
-        tvSeries.setTvSeriesRuntime(String.valueOf(jsonTvSeriesFull.getRuntime()));
-        tvSeries.setTvSeriesDesc(jsonTvSeriesFull.getDescription());
-        tvSeries.setTvSeriesYoutubeLink(jsonTvSeriesFull.getYoutubeLink());
-        tvSeries.setTvSeriesRating(jsonTvSeriesFull.getRating());
 
-        int id = jsonTvSeriesFull.getId();
+        Series series = mapper.toSeries(jsonTvSeriesFull);
+
         List<JsonEpisode> episodes = jsonTvSeriesFull.getJsonEpisodes();
         List<String> genres = jsonTvSeriesFull.getGenres();
         List<String> pictures = jsonTvSeriesFull.getPictures();
 
-        List<TvSeriesGenre> tvSeriesGenres = new ArrayList<>();
-        for(String genre : genres) {
-            tvSeriesGenres.add(new TvSeriesGenre(id,genre));
-        }
+        int id = series.getId();
+        List<Genre> genresList = mapper.toGenres(genres);
+        List<Episode> episodesList = mapper.toEpisodes(episodes, id);
+        List<Image> imageList = mapper.toImages(pictures, id);
 
-        List<TvSeriesEpisode> tvSeriesEpisodes = new ArrayList<>();
-        for(JsonEpisode episode : episodes) {
-            tvSeriesEpisodes.add(new TvSeriesEpisode(id,episode.getSeason(),episode.getEpisode(),episode.getName(),episode.getAirDate()));
-        }
 
-        List<TvSeriesPicture> tvSeriesPictures = new ArrayList<>();
-        for(String picture : pictures) {
-            tvSeriesPictures.add(new TvSeriesPicture(id, picture));
-        }
-        return new TvSeriesFull(tvSeries, tvSeriesGenres, tvSeriesEpisodes, tvSeriesPictures);
+//        genresList
+        return new SeriesWithAllDetails(series, episodesList, imageList);
     }
 
 

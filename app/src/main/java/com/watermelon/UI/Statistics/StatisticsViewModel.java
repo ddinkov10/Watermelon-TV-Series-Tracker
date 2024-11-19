@@ -26,6 +26,6 @@ public class StatisticsViewModel extends AndroidViewModel {
     }
 
     void fetchStatisticsData() {
-        repository.fetchStatistics();
+//        repository.fetchStatistics();
     }
 }

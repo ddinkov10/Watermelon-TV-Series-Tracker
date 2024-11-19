@@ -18,6 +18,9 @@ import com.watermelon.Models.TvSeries;
 import com.watermelon.Helpers.TvSeriesHelper;
 import com.watermelon.R;
 import com.squareup.picasso.Picasso;
+import com.watermelon.Repository.model.Series;
+import com.watermelon.Repository.model.watchlist.EpisodeWithWatchStatus;
+import com.watermelon.Repository.model.watchlist.SeriesWithEpisodes;
 
 
 import java.util.ArrayList;
@@ -26,11 +29,11 @@ import java.util.List;
 public class WatchlistAdapter extends RecyclerView.Adapter<WatchlistAdapter.TvSeriesFullViewHolder>{
 
     public interface OnItemClickListener {
-    void onItemClick(TvSeriesFull tvSeriesFull);
-    void onButtonClick(TvSeriesFull tvSeriesFull, int position);
+    void onItemClick(SeriesWithEpisodes tvSeriesFull);
+    void onButtonClick(SeriesWithEpisodes tvSeriesFull, int position);
     }
 
-    private List<TvSeriesFull> tvSeries = new ArrayList<>();
+    private List<SeriesWithEpisodes> tvSeries = new ArrayList<>();
     private OnItemClickListener listener;
 
     @NonNull
@@ -44,30 +47,30 @@ public class WatchlistAdapter extends RecyclerView.Adapter<WatchlistAdapter.TvSe
 
     @Override
     public void onBindViewHolder(@NonNull TvSeriesFullViewHolder holder, int position) {
-        TvSeries currentTvSeries = tvSeries.get(position).getTvSeries();
+        Series currentTvSeries = tvSeries.get(position).getSeries();
         int watched = TvSeriesHelper.getEpisodeProgress(tvSeries.get(position).getEpisodes());
         int progressMax = tvSeries.get(position).getEpisodes().size();
 
         Picasso.get()
-                .load(currentTvSeries.getTvSeriesImagePath())
+                .load(currentTvSeries.getImagePath())
                 .error(R.drawable.image_error_placeholder)
                 .placeholder(R.drawable.image_loading_placeholder)
                 .fit()
                 .into(holder.textViewTvSeriesImageThumbnail);
 
         holder.textViewProgress.setText(progressMax - watched  + " remaining");
-        holder.textViewTvSeriesName.setText(currentTvSeries.getTvSeriesName());
-        holder.textViewTvSeriesCountry.setText(currentTvSeries.getTvSeriesCountry());
-        holder.textViewTvSeriesNetwork.setText(currentTvSeries.getTvSeriesNetwork());
+        holder.textViewTvSeriesName.setText(currentTvSeries.getTitle());
+        holder.textViewTvSeriesCountry.setText(currentTvSeries.getCountry());
+        holder.textViewTvSeriesNetwork.setText(currentTvSeries.getNetwork());
         holder.imageViewEpisodeWatched.setImageResource(R.drawable.ic_check);
 
         if(tvSeries.get(position).getEpisodes().size() == 0){
             holder.textViewEpisodeName.setText("no episodes avaible");
             holder.textViewEpisodeReleaseDate.setText("no episodes avaible");
         }else if(!TvSeriesHelper.getTvSeriesState(tvSeries.get(position).getEpisodes())) {
-            TvSeriesEpisode tvSeriesEpisode = TvSeriesHelper.getNextWatched(tvSeries.get(position).getEpisodes());
-            holder.textViewEpisodeName.setText(StringHelper.addZero(tvSeriesEpisode.getEpisodeSeasonNum()) + "x" + StringHelper.addZero(tvSeriesEpisode.getEpisodeNum())  + " " + tvSeriesEpisode.getEpisodeName());
-            holder.textViewEpisodeReleaseDate.setText(DateHelper.getDateString(tvSeriesEpisode.getEpisodeAirDate()));
+            EpisodeWithWatchStatus tvSeriesEpisode = TvSeriesHelper.getNextWatched(tvSeries.get(position).getEpisodes());
+            holder.textViewEpisodeName.setText(StringHelper.addZero(tvSeriesEpisode.getEpisode().getSeasonNumber()) + "x" + StringHelper.addZero(tvSeriesEpisode.getEpisode().getEpisodeNumber())  + " " + tvSeriesEpisode.getEpisode().getTitle());
+            holder.textViewEpisodeReleaseDate.setText(DateHelper.getDateString(tvSeriesEpisode.getEpisode().getAirDate()));
 //        }
         }else {
             holder.textViewEpisodeName.setText("No more released episodes");
@@ -79,7 +82,7 @@ public class WatchlistAdapter extends RecyclerView.Adapter<WatchlistAdapter.TvSe
 
     }
 
-    void setTvSeries(List<TvSeriesFull> tvSeries) {
+    void setTvSeries(List<SeriesWithEpisodes> tvSeries) {
         this.tvSeries = tvSeries;
         notifyDataSetChanged();
     }

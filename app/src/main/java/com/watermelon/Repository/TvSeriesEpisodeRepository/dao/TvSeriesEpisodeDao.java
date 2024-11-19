@@ -6,16 +6,17 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.watermelon.Models.TvSeriesEpisode;
+import com.watermelon.Repository.model.Episode;
 
 import java.util.List;
 
 @Dao
 public interface TvSeriesEpisodeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertTvSeriesEpisode(TvSeriesEpisode tvSeriesEpisode);
+    void insertEpisode(Episode episode);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertAllTvSeriesEpisodes(List<TvSeriesEpisode> episodes);
+    void insertEpisodes(List<Episode> episodes);
 
     @Query("UPDATE tv_series_episode_table SET episode_is_watched=:isWatched WHERE id IN (:id)")
     void updateTvSeriesEpisodeWatchedFlag(int id, boolean isWatched);

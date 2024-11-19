@@ -19,10 +19,14 @@ import com.watermelon.Repository.TvSeriesFullRepository.datasource.LocalTvSeries
 import com.watermelon.Repository.TvSeriesFullRepository.TvSeriesFullRepositoryImpl;
 import com.watermelon.Repository.TvSeriesFullRepository.datasource.RemoteTvSeriesFullDataSource;
 import com.watermelon.Repository.TvSeriesFullRepository.datasource.RemoteTvSeriesFullDataSourceImpl;
-import com.watermelon.Repository.TvSeriesRepository.TvSeriesRepositoryImpl;
-import com.watermelon.Repository.TvSeriesRepository.datasource.LocalTvSeriesDataSource;
-import com.watermelon.Repository.TvSeriesRepository.datasource.LocalTvSeriesDataSourceImpl;
+import com.watermelon.Repository.SeriesRepository.TvSeriesRepositoryImpl;
+import com.watermelon.Repository.SeriesRepository.datasource.LocalTvSeriesDataSource;
+import com.watermelon.Repository.SeriesRepository.datasource.LocalTvSeriesDataSourceImpl;
+import com.watermelon.Repository.watchlistRepository.WatchlistRepositoryImpl;
+import com.watermelon.Repository.watchlistRepository.datasource.LocalWatchlistDataSource;
+import com.watermelon.Repository.watchlistRepository.datasource.LocalWatchlistDataSourceImpl;
 import com.watermelon.WatermelonApplication;
+import com.watermelon.domain.repository.WatchlistRepository;
 import com.watermelon.domain.usecase.AddToWatchlistUseCase;
 import com.watermelon.domain.usecase.AddToWatchlistUseCaseImpl;
 import com.watermelon.domain.usecase.ChangeEpisodeWatchedFlagUseCase;
@@ -110,7 +114,7 @@ public class Injection extends InjectionBase {
     }
 
     public static GetWatchlistUseCase provideGetWatchlistUseCase() {
-        return new GetWatchlistUseCaseImpl(provideTvSeriesFullRepository());
+        return new GetWatchlistUseCaseImpl(provideWatchlistRepository());
     }
 
     public static LocalTvSeriesFullDataSource provideLocalTvSeriesFullDataSource() {
@@ -144,6 +148,19 @@ public class Injection extends InjectionBase {
         return httpClient.readTimeout(1200, TimeUnit.SECONDS)
                 .connectTimeout(1200, TimeUnit.SECONDS).build();
 
+    }
+
+    public static WatchlistRepository provideWatchlistRepository() {
+        return provideSingleton(WatchlistRepository.class, new SingletonFactory<WatchlistRepository>() {
+            @Override
+            public WatchlistRepository create() {
+                return new WatchlistRepositoryImpl(provideLocalWatchlistDataSource());
+            }
+        });
+    }
+
+    public static LocalWatchlistDataSource provideLocalWatchlistDataSource() {
+        return new LocalWatchlistDataSourceImpl(provideAppDatabase());
     }
 
     public static TvSeriesFullRepository provideTvSeriesFullRepository() {

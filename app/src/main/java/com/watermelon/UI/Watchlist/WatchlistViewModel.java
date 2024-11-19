@@ -6,8 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.watermelon.Models.TvSeriesFull;
-import com.watermelon.UI.WatermelonActivity;
+import com.watermelon.Repository.model.watchlist.SeriesWithEpisodes;
 import com.watermelon.domain.usecase.ChangeEpisodeWatchedFlagUseCase;
 import com.watermelon.domain.usecase.GetWatchlistUseCase;
 import com.watermelon.UI.framework.common.UseCaseHandler;
@@ -20,14 +19,14 @@ public class WatchlistViewModel extends ViewModel {
     private GetWatchlistUseCase getWatchlistUseCase;
 
     private ChangeEpisodeWatchedFlagUseCase changeEpisodeWatchedFlagUseCase;
-    private MutableLiveData<List<TvSeriesFull>> watchlistList;
+    private MutableLiveData<List<SeriesWithEpisodes>> watchlistList;
 
     public WatchlistViewModel(UseCaseHandler useCaseHandler, GetWatchlistUseCase getWatchlistUseCase, ChangeEpisodeWatchedFlagUseCase changeEpisodeWatchedFlagUseCase) {
 
         this.useCaseHandler  = useCaseHandler;
         this.getWatchlistUseCase = getWatchlistUseCase;
         this.changeEpisodeWatchedFlagUseCase = changeEpisodeWatchedFlagUseCase;
-        this.watchlistList = new MutableLiveData<>();
+        this.watchlistList = new MutableLiveData<List<SeriesWithEpisodes>>();
         loadWatchlist();
 
     }
@@ -37,10 +36,10 @@ public class WatchlistViewModel extends ViewModel {
     }
 
     private void loadWatchlistInternal() {
-        useCaseHandler.execute(getWatchlistUseCase, new GetWatchlistUseCase.RequestValues(WatermelonActivity.TVSERIES_WATCHED_FLAG_YES), new UseCaseHandler.UseCaseCallback<GetWatchlistUseCase.ResponseValue>() {
+        useCaseHandler.execute(getWatchlistUseCase, null, new UseCaseHandler.UseCaseCallback<GetWatchlistUseCase.ResponseValue>() {
             @Override
             public void onSuccess(GetWatchlistUseCase.ResponseValue response) {
-                updateWatchlist(response.getWatchlistList());
+                updateWatchlist(response.getWatchlistList().getSeriesList());
             }
 
             @Override
@@ -50,11 +49,11 @@ public class WatchlistViewModel extends ViewModel {
         });
     }
 
-    private void updateWatchlist(List<TvSeriesFull> list) {
+    private void updateWatchlist(List<SeriesWithEpisodes> list) {
         watchlistList.setValue(list);
     }
 
-    LiveData<List<TvSeriesFull>> getWatchlistListObservable() {
+    LiveData<List<SeriesWithEpisodes>> getWatchlistListObservable() {
         return watchlistList;
     }
 

@@ -1,20 +1,22 @@
 package com.watermelon.domain.usecase;
 
 import com.watermelon.Models.TvSeriesFull;
+import com.watermelon.Repository.model.watchlist.WatchlistWithDetails;
 import com.watermelon.domain.repository.TvSeriesFullRepository;
+import com.watermelon.domain.repository.WatchlistRepository;
 
 import java.util.List;
 
 public class GetWatchlistUseCaseImpl implements GetWatchlistUseCase{
 
-    private final TvSeriesFullRepository tvSeriesFullRepository;
+    private final WatchlistRepository watchlistRepository;
 
-    public GetWatchlistUseCaseImpl (TvSeriesFullRepository tvSeriesFullRepository) {
-        this.tvSeriesFullRepository = tvSeriesFullRepository;
+    public GetWatchlistUseCaseImpl (WatchlistRepository watchlistRepository) {
+        this.watchlistRepository = watchlistRepository;
     }
     @Override
     public ResponseValue executeUseCase(RequestValues requestValues) {
-        List<TvSeriesFull> result = tvSeriesFullRepository.getTvSeriesByFlag(requestValues.getFlag());
+        WatchlistWithDetails result = watchlistRepository.getWatchlist();
         return new ResponseValue(result);
     }
 }

@@ -26,6 +26,10 @@ public class TvSeriesFull {
         this.pictures = pictures;
     }
 
+    public TvSeriesFull() {
+
+    }
+
     public TvSeries getTvSeries() {
         return tvSeries;
     }

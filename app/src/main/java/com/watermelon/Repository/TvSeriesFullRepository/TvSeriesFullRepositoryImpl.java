@@ -29,7 +29,8 @@ public class TvSeriesFullRepositoryImpl implements TvSeriesFullRepository {
 
     @Override
     public TvSeriesFull fetchTvSeriesDetails(int id) {
-        return  remoteTvSeriesFullDataSource.fetchTvSeriesDetails(id);
+//        return  remoteTvSeriesFullDataSource.fetchTvSeriesDetails(id);
+        return new TvSeriesFull();
     }
 
     @Override

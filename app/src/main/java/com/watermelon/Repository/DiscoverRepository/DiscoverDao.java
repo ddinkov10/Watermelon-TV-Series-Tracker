@@ -8,8 +8,8 @@ import com.watermelon.Models.TvSeries;
 
 import java.util.List;
 
-@Dao
-public interface DiscoverDao {
-    @Query("SELECT * FROM tv_series_table")
-    LiveData<List<TvSeries>> getDiscoverTvSeries();
-}
+//@Dao
+//public interface DiscoverDao {
+//    @Query("SELECT * FROM tv_series_table")
+//    LiveData<List<TvSeries>> getDiscoverTvSeries();
+//}

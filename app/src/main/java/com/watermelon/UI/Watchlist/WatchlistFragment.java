@@ -24,6 +24,8 @@ import android.widget.RelativeLayout;
 import com.watermelon.Common.injection.Injection;
 import com.watermelon.Models.TvSeriesFull;
 import com.watermelon.Helpers.TvSeriesHelper;
+import com.watermelon.Repository.model.watchlist.EpisodeWithWatchStatus;
+import com.watermelon.Repository.model.watchlist.SeriesWithEpisodes;
 import com.watermelon.UI.WatermelonActivity;
 import com.watermelon.R;
 
@@ -68,9 +70,9 @@ public class WatchlistFragment extends Fragment implements WatchlistAdapter.OnIt
         navController = Navigation.findNavController(getView());
         recyclerView.setAdapter(watchlistAdapter);
 //        watchlistViewModel.fetchWatchlistData();
-        watchlistViewModel.getWatchlistListObservable().observe(getViewLifecycleOwner(), new Observer<List<TvSeriesFull>>() {
+        watchlistViewModel.getWatchlistListObservable().observe(getViewLifecycleOwner(), new Observer<List<SeriesWithEpisodes>>() {
                     @Override
-                    public void onChanged(List<TvSeriesFull> tvSeriesFulls) {
+                    public void onChanged(List<SeriesWithEpisodes> tvSeriesFulls) {
                         watchlistAdapter.setTvSeries(tvSeriesFulls);
                         if(watchlistAdapter.getItemCount() == 0){
                             emptyLayout.setVisibility(View.VISIBLE);
@@ -84,20 +86,20 @@ public class WatchlistFragment extends Fragment implements WatchlistAdapter.OnIt
     }
 
     @Override
-    public void onItemClick(TvSeriesFull tvSeriesFull) {
+    public void onItemClick(SeriesWithEpisodes tvSeriesFull) {
         if (navController.getCurrentDestination().getId() == R.id.navigation_watchlist) {
             Bundle bundle = new Bundle();
-            int id = tvSeriesFull.tvSeries.getTvSeriesId();
+            int id = tvSeriesFull.getSeries().getId();
             bundle.putString(WatermelonActivity.TVSERIES_ID, String.valueOf(id));
             navController.navigate(R.id.action_navigation_watchlist_to_details_fragment, bundle);
         }
     }
 
     @Override
-    public void onButtonClick(TvSeriesFull tvSeriesFull, int position) {
+    public void onButtonClick(SeriesWithEpisodes tvSeriesFull, int position) {
 
         if(TvSeriesHelper.getNextWatched(tvSeriesFull.getEpisodes()) != null) {
-            int id = TvSeriesHelper.getNextWatched(tvSeriesFull.getEpisodes()).getId();
+            int id = TvSeriesHelper.getNextWatched(tvSeriesFull.getEpisodes()).getEpisode().getId();
             Pair<Integer, Boolean> params = new Pair<>(id, WatermelonActivity.TVSERIES_WATCHED_EPISODE_FLAG_YES);
             watchlistViewModel.changeEpisodeWatchedFlag(params);
 //            watchlistViewModel.fetchWatchlistData();

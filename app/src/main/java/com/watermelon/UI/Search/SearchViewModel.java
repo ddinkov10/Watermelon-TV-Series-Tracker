@@ -38,11 +38,11 @@ public class SearchViewModel extends AndroidViewModel {
     }
 
     void searchTvSeriesData(String searchWord) {
-        repository.searchTvSeries(searchWord, 1);
+//        repository.searchTvSeries(searchWord, 1);
     }
 
     void clearSearchedTvSeries() {
-        repository.clearSearchList();
+//        repository.clearSearchList();
     }
 
     void fetchTvSeriesDetails(int id) {

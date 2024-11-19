@@ -17,7 +17,7 @@ public class LocalTvEpisodeDataSourceImpl implements LocalTvEpisodeDataSource {
         int id = params.first;
         boolean flag = params.second;
 
-        appDatabase.getTvSeriesEpisodeDao()
-                .updateTvSeriesEpisodeWatchedFlag(id, flag);
+//        appDatabase.getTvSeriesEpisodeDao()
+//                .updateTvSeriesEpisodeWatchedFlag(id, flag);
     }
 }

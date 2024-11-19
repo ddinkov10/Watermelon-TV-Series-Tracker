@@ -10,11 +10,11 @@ import com.watermelon.Models.TvSeriesFull;
 import java.util.List;
 
 @Dao
-public interface TvSeriesFullDao {
+public interface SeriesWithAllDetailsDao {
 
     @Transaction
-    @Query("SELECT * FROM tv_series_table WHERE tv_series_api_id=:id")
-    LiveData<TvSeriesFull> getTvSeriesFullByIdLiveData(int id);
+    @Query("SELECT * FROM series WHERE id=:id")
+    LiveData<SeriesWithAllDetailsDao> getTvSeriesFullByIdLiveData(int id);
 
     @Transaction
     @Query("SELECT * FROM tv_series_table WHERE tv_series_api_id=:id")
