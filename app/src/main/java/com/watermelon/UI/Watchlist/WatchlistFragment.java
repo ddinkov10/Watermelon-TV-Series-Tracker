@@ -24,14 +24,17 @@ import android.widget.RelativeLayout;
 import com.watermelon.Common.injection.Injection;
 import com.watermelon.Models.TvSeriesFull;
 import com.watermelon.Helpers.TvSeriesHelper;
+import com.watermelon.UI.ViewModelFactory.WatchlistViewModelFactory;
 import com.watermelon.UI.WatermelonActivity;
 import com.watermelon.R;
+import com.watermelon.WatermelonViewModel;
 
 import java.util.List;
 
 public class WatchlistFragment extends Fragment implements WatchlistAdapter.OnItemClickListener {
 
 
+    private WatermelonViewModel watermelonViewModel;
     private WatchlistViewModel watchlistViewModel;
     private WatchlistAdapter watchlistAdapter;
     private RecyclerView recyclerView;
@@ -42,12 +45,15 @@ public class WatchlistFragment extends Fragment implements WatchlistAdapter.OnIt
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        watermelonViewModel = new ViewModelProvider(requireActivity()).get(WatermelonViewModel.class);
         watchlistAdapter = new WatchlistAdapter();
-        watchlistViewModel = new WatchlistViewModel(
-                Injection.provideUseCaseHandler(),
-                Injection.provideGetWatchlistUseCase(),
-                Injection.provideChangeEpisodeWatchedFlagUseCase()
-        );
+        WatchlistViewModelFactory factory = new WatchlistViewModelFactory(Injection.provideUseCaseHandler(), Injection.provideGetWatchlistUseCase(), Injection.provideChangeEpisodeWatchedFlagUseCase());
+        watchlistViewModel = new ViewModelProvider(this, factory).get(WatchlistViewModel.class);
+//        watchlistViewModel = new WatchlistViewModel(
+//                Injection.provideUseCaseHandler(),
+//                Injection.provideGetWatchlistUseCase(),
+//                Injection.provideChangeEpisodeWatchedFlagUseCase()
+//        );
     }
 
     @Override
@@ -58,29 +64,34 @@ public class WatchlistFragment extends Fragment implements WatchlistAdapter.OnIt
         recyclerView = view.findViewById(R.id.watchlist_recycler_view);
         recyclerView.setHasFixedSize(true);
         emptyLayout = view.findViewById(R.id.emptystatelayout);
-        watchlistViewModel.loadWatchlist();
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(getView());
+        recyclerView.setAdapter(watchlistAdapter);
+        watchlistViewModel.loadWatchlist();
+        watchlistViewModel.getWatchlistListObservable().observe(getViewLifecycleOwner(), new Observer<List<TvSeriesFull>>() {
+            @Override
+            public void onChanged(List<TvSeriesFull> tvSeriesFulls) {
+                watchlistAdapter.setTvSeries(tvSeriesFulls);
+                if(watchlistAdapter.getItemCount() == 0){
+                    emptyLayout.setVisibility(View.VISIBLE);
+                }else if(watchlistAdapter.getItemCount() != 0){
+                    emptyLayout.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        watchlistAdapter.setOnItemClickListener(this);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        navController = Navigation.findNavController(getView());
-        recyclerView.setAdapter(watchlistAdapter);
-//        watchlistViewModel.fetchWatchlistData();
-        watchlistViewModel.getWatchlistListObservable().observe(getViewLifecycleOwner(), new Observer<List<TvSeriesFull>>() {
-                    @Override
-                    public void onChanged(List<TvSeriesFull> tvSeriesFulls) {
-                        watchlistAdapter.setTvSeries(tvSeriesFulls);
-                        if(watchlistAdapter.getItemCount() == 0){
-                            emptyLayout.setVisibility(View.VISIBLE);
-                        }else if(watchlistAdapter.getItemCount() != 0){
-                            emptyLayout.setVisibility(View.GONE);
-                        }
-                    }
-                });
 
-        watchlistAdapter.setOnItemClickListener(this);
     }
 
     @Override

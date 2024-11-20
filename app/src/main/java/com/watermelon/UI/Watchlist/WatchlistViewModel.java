@@ -28,15 +28,9 @@ public class WatchlistViewModel extends ViewModel {
         this.getWatchlistUseCase = getWatchlistUseCase;
         this.changeEpisodeWatchedFlagUseCase = changeEpisodeWatchedFlagUseCase;
         this.watchlistList = new MutableLiveData<>();
-        loadWatchlist();
-
     }
 
     public void loadWatchlist() {
-        loadWatchlistInternal();
-    }
-
-    private void loadWatchlistInternal() {
         useCaseHandler.execute(getWatchlistUseCase, new GetWatchlistUseCase.RequestValues(WatermelonActivity.TVSERIES_WATCHED_FLAG_YES), new UseCaseHandler.UseCaseCallback<GetWatchlistUseCase.ResponseValue>() {
             @Override
             public void onSuccess(GetWatchlistUseCase.ResponseValue response) {
