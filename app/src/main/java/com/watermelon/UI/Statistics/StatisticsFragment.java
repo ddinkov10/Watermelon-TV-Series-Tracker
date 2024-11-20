@@ -15,8 +15,10 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.watermelon.Common.injection.Injection;
 import com.watermelon.Helpers.DateHelper;
 import com.watermelon.R;
+import com.watermelon.UI.ViewModelFactory.StatisticsViewModelFactory;
 
 import java.util.List;
 
@@ -38,8 +40,8 @@ public class StatisticsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        statisticsViewModel = new ViewModelProvider(this).get(StatisticsViewModel.class);
-        statisticsViewModel.fetchStatisticsData();
+        StatisticsViewModelFactory factory = new StatisticsViewModelFactory(Injection.provideUseCaseHandler(), Injection.provideGetStatisticsUseCase());
+        statisticsViewModel = new ViewModelProvider(this, factory).get(StatisticsViewModel.class);
     }
 
     @Override
@@ -58,6 +60,12 @@ public class StatisticsFragment extends Fragment {
 
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        statisticsViewModel.fetchStatisticsData();
     }
 
     @Override

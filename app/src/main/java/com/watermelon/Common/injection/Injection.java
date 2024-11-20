@@ -27,6 +27,8 @@ import com.watermelon.domain.usecase.AddToWatchlistUseCase;
 import com.watermelon.domain.usecase.AddToWatchlistUseCaseImpl;
 import com.watermelon.domain.usecase.ChangeEpisodeWatchedFlagUseCase;
 import com.watermelon.domain.usecase.ChangeEpisodeWatchedFlagUseCaseImpl;
+import com.watermelon.domain.usecase.GetStatisticsUseCase;
+import com.watermelon.domain.usecase.GetStatisticsUseCaseImpl;
 import com.watermelon.domain.usecase.GetWatchlistUseCase;
 import com.watermelon.domain.usecase.GetWatchlistUseCaseImpl;
 import com.watermelon.domain.usecase.RemoveFromWatchlistUseCase;
@@ -52,6 +54,10 @@ import okhttp3.OkHttpClient;
 
 
 public class Injection extends InjectionBase {
+
+    public static GetStatisticsUseCase provideGetStatisticsUseCase() {
+        return new GetStatisticsUseCaseImpl(provideGetWatchlistUseCase());
+    }
 
     public static RemoveFromWatchlistUseCase provideRemoveFromWatchlistUseCase() {
         return new RemoveFromWatchlistUseCaseImpl(provideTvSeriesRepository());
