@@ -15,6 +15,7 @@ import com.watermelon.Repository.TvSeriesFullRepository.dao.TvSeriesFullDao;
 import com.watermelon.Repository.TvSeriesGenre.TvSeriesGenreDao;
 import com.watermelon.Repository.TvSeriesPicturesRepository.TvSeriesPicturesDao;
 import com.watermelon.Repository.TvSeriesRepository.dao.TvSeriesDao;
+import com.watermelon.Repository.TvSeriesCalendarEpisodeRepository.dao.TvSeriesCalendarEpisodeDao;
 
 
 @Database(entities = {TvSeries.class, TvSeriesEpisode.class, TvSeriesPicture.class, TvSeriesGenre.class}, version = 1)
@@ -28,6 +29,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract TvSeriesGenreDao getTvSeriesGenreDao();
 
     public abstract TvSeriesPicturesDao getTvSeriesPicturesDao();
+
+    public abstract TvSeriesCalendarEpisodeDao getTvSeriesCalendarEpisodeDao();
 
     public abstract DiscoverDao getDiscoverDao();
 

@@ -19,14 +19,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.watermelon.Common.injection.Injection;
 import com.watermelon.Models.TvSeriesCalendarEpisode;
+import com.watermelon.UI.ViewModelFactory.CalendarViewModelFactory;
 import com.watermelon.UI.WatermelonActivity;
 import com.watermelon.R;
 
 import java.util.List;
 
 public class CalendarFragment extends Fragment implements CalendarAdapter.OnItemClickListener {
-    private Activity activity;
     private CalendarViewModel calendarViewModel;
     private CalendarAdapter calendarAdapter;
 
@@ -37,10 +38,14 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.activity = getActivity();
-        calendarViewModel = new ViewModelProvider(this).get(CalendarViewModel.class);
+//        this.activity = getActivity();
         calendarAdapter = new CalendarAdapter();
-        calendarAdapter.setOnItemClickListener(this);
+        CalendarViewModelFactory factory = new CalendarViewModelFactory(
+                Injection.provideUseCaseHandler(),
+                Injection.provideGetCalendarListUseCase()
+        );
+        calendarViewModel = new ViewModelProvider(this, factory).get(CalendarViewModel.class);
+
     }
 
     @Override
@@ -49,16 +54,18 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         View view = inflater.inflate(R.layout.calendar_fragment, container, false);
 
         calendarRecyclerView = view.findViewById(R.id.calendar_recycler_view);
-        calendarRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
+        calendarRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
         calendarEmptyStateLayout = view.findViewById(R.id.empty_state_calendar_layout);
         return view;
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         calendarRecyclerView.setAdapter(calendarAdapter);
+        calendarAdapter.setOnItemClickListener(this);
+        calendarViewModel.loadCalendarList();
 
         calendarViewModel.getCalendarListObservable().observe(getViewLifecycleOwner(), new Observer<List<TvSeriesCalendarEpisode>>() {
             @Override
@@ -73,9 +80,7 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
                 }
             }
         });
-
     }
-
     @Override
     public void onItemClick(TvSeriesCalendarEpisode tvSeriesCalendarEpisode) {
         NavController navHostController = Navigation.findNavController(getView());

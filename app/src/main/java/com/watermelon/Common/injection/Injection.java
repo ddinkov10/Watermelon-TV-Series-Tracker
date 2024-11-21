@@ -11,6 +11,9 @@ import com.watermelon.Repository.Api.ApiModels.RetrofitModule;
 import com.watermelon.Repository.Api.ApiModels.RetrofitModuleImpl;
 import com.watermelon.Repository.Api.ApiService;
 import com.watermelon.Repository.AppDatabase;
+import com.watermelon.Repository.TvSeriesCalendarEpisodeRepository.TvSeriesCalendarEpisodeRepositoryImpl;
+import com.watermelon.Repository.TvSeriesCalendarEpisodeRepository.datasource.LocalTvSeriesCalendarEpisodeDataSource;
+import com.watermelon.Repository.TvSeriesCalendarEpisodeRepository.datasource.LocalTvSeriesCalendarEpisodeDataSourceImpl;
 import com.watermelon.Repository.TvSeriesEpisodeRepository.datasource.LocalTvEpisodeDataSource;
 import com.watermelon.Repository.TvSeriesEpisodeRepository.datasource.LocalTvEpisodeDataSourceImpl;
 import com.watermelon.Repository.TvSeriesEpisodeRepository.TvSeriesEpisodeRepositoryImpl;
@@ -23,10 +26,13 @@ import com.watermelon.Repository.TvSeriesRepository.TvSeriesRepositoryImpl;
 import com.watermelon.Repository.TvSeriesRepository.datasource.LocalTvSeriesDataSource;
 import com.watermelon.Repository.TvSeriesRepository.datasource.LocalTvSeriesDataSourceImpl;
 import com.watermelon.WatermelonApplication;
+import com.watermelon.domain.repository.TvSeriesCalendarEpisodeRepository;
 import com.watermelon.domain.usecase.AddToWatchlistUseCase;
 import com.watermelon.domain.usecase.AddToWatchlistUseCaseImpl;
 import com.watermelon.domain.usecase.ChangeEpisodeWatchedFlagUseCase;
 import com.watermelon.domain.usecase.ChangeEpisodeWatchedFlagUseCaseImpl;
+import com.watermelon.domain.usecase.GetCalendarListUseCase;
+import com.watermelon.domain.usecase.GetCalendarListUseCaseImpl;
 import com.watermelon.domain.usecase.GetStatisticsUseCase;
 import com.watermelon.domain.usecase.GetStatisticsUseCaseImpl;
 import com.watermelon.domain.usecase.GetWatchlistUseCase;
@@ -54,6 +60,23 @@ import okhttp3.OkHttpClient;
 
 
 public class Injection extends InjectionBase {
+
+    public static GetCalendarListUseCase provideGetCalendarListUseCase() {
+        return new GetCalendarListUseCaseImpl(provideTvSeriesCalendarEpisodeRepository());
+    }
+
+    public static TvSeriesCalendarEpisodeRepository provideTvSeriesCalendarEpisodeRepository() {
+        return provideSingleton(TvSeriesCalendarEpisodeRepository.class, new SingletonFactory<TvSeriesCalendarEpisodeRepository>() {
+            @Override
+            public TvSeriesCalendarEpisodeRepository create() {
+                return new TvSeriesCalendarEpisodeRepositoryImpl(provideLocalTvSeriesCalendarEpisodeDataSource());
+            }
+        });
+    }
+
+    public static LocalTvSeriesCalendarEpisodeDataSource provideLocalTvSeriesCalendarEpisodeDataSource() {
+        return new LocalTvSeriesCalendarEpisodeDataSourceImpl(provideAppDatabase());
+    }
 
     public static GetStatisticsUseCase provideGetStatisticsUseCase() {
         return new GetStatisticsUseCaseImpl(provideGetWatchlistUseCase());
