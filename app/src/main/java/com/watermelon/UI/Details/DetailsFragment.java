@@ -34,6 +34,7 @@ import com.watermelon.Models.TvSeriesFull;
 import com.watermelon.Helpers.StringHelper;
 import com.watermelon.Helpers.TvSeriesHelper;
 import com.watermelon.UI.UiState;
+import com.watermelon.UI.ViewModelFactory.DetailsViewModelFactory;
 import com.watermelon.UI.WatermelonActivity;
 import com.watermelon.Repository.AppRepoHelpClasses.Resource;
 import com.watermelon.Repository.AppRepoHelpClasses.Status;
@@ -76,15 +77,15 @@ public class DetailsFragment extends Fragment implements DetailsSeasonsAdapter.O
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.activity = getActivity();
-//        detailsViewModel = new ViewModelProvider(this).get(DetailsViewModel.class);
-        detailsViewModel = new DetailsViewModel(
+        DetailsViewModelFactory factory = new DetailsViewModelFactory(
                 Injection.provideUseCaseHandler(),
                 Injection.provideFetchAndSaveTvSeriesDetailsUseCase(),
                 Injection.provideGetTvSeriesDetailsUseCase(),
-                Injection.provideChangeEpisodeWatchedFlagUseCase(),
                 Injection.provideAddToWatchlistUseCase(),
-                Injection.provideRemoveFromWatchlistUseCase()
+                Injection.provideRemoveFromWatchlistUseCase(),
+                Injection.provideChangeEpisodesWatchedFlagUseCase()
         );
+        detailsViewModel = new ViewModelProvider(this, factory).get(DetailsViewModel.class);
         detailsSeasonsAdapter = new DetailsSeasonsAdapter();
         detailsPicturesViewPagerAdapter = new DetailsPicturesViewPagerAdapter();
         detailsPicturesViewPagerAdapter.setContext(getContext());

@@ -5,6 +5,8 @@ import android.util.Pair;
 import com.watermelon.Repository.TvSeriesEpisodeRepository.datasource.LocalTvEpisodeDataSource;
 import com.watermelon.domain.repository.TvSeriesEpisodeRepository;
 
+import java.util.List;
+
 public class TvSeriesEpisodeRepositoryImpl implements TvSeriesEpisodeRepository {
 
     private final LocalTvEpisodeDataSource localTvEpisodeDataSource;
@@ -19,4 +21,8 @@ public class TvSeriesEpisodeRepositoryImpl implements TvSeriesEpisodeRepository 
         localTvEpisodeDataSource.setTvSeriesEpisodeWatchedFlag(params);
     }
 
+    @Override
+    public void setTvSeriesAllSeasonWatched(Pair<List<Integer>, Boolean> params) {
+        localTvEpisodeDataSource.setTvSeriesAllSeasonWatched(params);
+    }
 }
