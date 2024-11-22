@@ -25,6 +25,8 @@ import com.watermelon.Repository.TvSeriesFullRepository.datasource.RemoteTvSerie
 import com.watermelon.Repository.TvSeriesRepository.TvSeriesRepositoryImpl;
 import com.watermelon.Repository.TvSeriesRepository.datasource.LocalTvSeriesDataSource;
 import com.watermelon.Repository.TvSeriesRepository.datasource.LocalTvSeriesDataSourceImpl;
+import com.watermelon.Repository.TvSeriesRepository.datasource.RemoteTvSeriesDataSource;
+import com.watermelon.Repository.TvSeriesRepository.datasource.RemoteTvSeriesDataSourceImpl;
 import com.watermelon.WatermelonApplication;
 import com.watermelon.domain.repository.TvSeriesCalendarEpisodeRepository;
 import com.watermelon.domain.usecase.AddToWatchlistUseCase;
@@ -57,6 +59,8 @@ import com.watermelon.domain.usecase.GetTvSeriesDetailsUseCase;
 import com.watermelon.domain.usecase.GetTvSeriesDetailsUseCaseImpl;
 import com.watermelon.domain.usecase.SaveTvSeriesDetailsUseCase;
 import com.watermelon.domain.usecase.SaveTvSeriesDetailsUseCaseImpl;
+import com.watermelon.domain.usecase.SearchTvSeriesUseCase;
+import com.watermelon.domain.usecase.SearchTvSeriesUseCaseImpl;
 
 import java.util.concurrent.TimeUnit;
 
@@ -64,6 +68,10 @@ import okhttp3.OkHttpClient;
 
 
 public class Injection extends InjectionBase {
+
+    public static SearchTvSeriesUseCase provideSearchTvSeriesUseCase() {
+        return new SearchTvSeriesUseCaseImpl(provideTvSeriesRepository());
+    }
 
     public static ChangeEpisodesWatchedFlagUseCase provideChangeEpisodesWatchedFlagUseCase() {
         return new ChangeEpisodesWatchedFlagUseCaseImpl(provideTvSeriesEpisodeRepository());
@@ -106,9 +114,13 @@ public class Injection extends InjectionBase {
         return provideSingleton(TvSeriesRepository.class, new SingletonFactory<TvSeriesRepository>() {
             @Override
             public TvSeriesRepository create() {
-                return new TvSeriesRepositoryImpl(provideLocalTvSeriesDataSource());
+                return new TvSeriesRepositoryImpl(provideLocalTvSeriesDataSource(), provideRemoteTvSeriesDataSource());
             }
         });
+    }
+
+    public static RemoteTvSeriesDataSource provideRemoteTvSeriesDataSource() {
+        return new RemoteTvSeriesDataSourceImpl(provideApiService());
     }
 
     public static LocalTvSeriesDataSource provideLocalTvSeriesDataSource() {

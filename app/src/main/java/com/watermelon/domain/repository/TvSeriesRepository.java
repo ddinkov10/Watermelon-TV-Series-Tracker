@@ -8,6 +8,8 @@ public interface TvSeriesRepository {
 
     List<TvSeries> getAllTvSeries();
 
+    List<TvSeries> searchTvSeries(String searchWord);
+
     void addToWatchlist(int id);
 
     void removeFromWatchlist(int id);

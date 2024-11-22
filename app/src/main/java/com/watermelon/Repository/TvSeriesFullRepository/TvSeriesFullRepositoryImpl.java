@@ -41,4 +41,6 @@ public class TvSeriesFullRepositoryImpl implements TvSeriesFullRepository {
     public List<TvSeriesFull> getTvSeriesByFlag(boolean flag) {
         return localTvSeriesFullDataSource.getTvSeriesFullByFlag(flag);
     }
+
+
 }

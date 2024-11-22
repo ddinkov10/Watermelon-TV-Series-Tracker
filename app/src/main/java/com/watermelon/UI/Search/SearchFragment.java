@@ -22,8 +22,10 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.watermelon.Common.injection.Injection;
 import com.watermelon.Helpers.KeyboardHelper;
 import com.watermelon.Models.TvSeries;
+import com.watermelon.UI.ViewModelFactory.SearchViewModelFactory;
 import com.watermelon.UI.WatermelonActivity;
 import com.watermelon.R;
 
@@ -42,7 +44,12 @@ public class SearchFragment extends Fragment implements SearchAdapter.OnItemClic
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = getActivity();
-        searchViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
+        SearchViewModelFactory factory = new SearchViewModelFactory(
+                Injection.provideUseCaseHandler(),
+                Injection.provideGetAllTvSeriesUseCase(),
+                Injection.provideSearchTvSeriesUseCase()
+        );
+        searchViewModel = new ViewModelProvider(this, factory).get(SearchViewModel.class);
         adapterSearch = new SearchAdapter();
         adapterSearch.setOnItemClickListener(this);
     }
@@ -66,6 +73,7 @@ public class SearchFragment extends Fragment implements SearchAdapter.OnItemClic
         super.onActivityCreated(savedInstanceState);
 
         searchFragmentRecyclerView.setAdapter(adapterSearch);
+        searchViewModel.loadAllTvSeries();
         searchViewModel.getDiscoverList().observe(getViewLifecycleOwner(), new Observer<List<TvSeries>>() {
             @Override
             public void onChanged(List<TvSeries> tvSeries) {
@@ -86,7 +94,6 @@ public class SearchFragment extends Fragment implements SearchAdapter.OnItemClic
     @Override
     public void onItemClick(TvSeries tvSeries) {
         int id = tvSeries.getTvSeriesId();
-        searchViewModel.fetchTvSeriesDetails(id);
         NavController navHostController = Navigation.findNavController(getView());
         if(navHostController.getCurrentDestination().getId() == R.id.fragment_search){
             Bundle bundle = new Bundle();
