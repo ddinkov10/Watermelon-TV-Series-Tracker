@@ -20,6 +20,8 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.watermelon.Common.injection.Injection;
+import com.watermelon.UI.ViewModelFactory.DiscoverViewModelFactory;
 import com.watermelon.UI.WatermelonActivity;
 import com.watermelon.Models.TvSeries;
 import com.watermelon.R;
@@ -39,10 +41,13 @@ public class DiscoverFragment extends Fragment implements DiscoverAdapter.OnItem
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.activity = getActivity();
-        discoverViewModel = new ViewModelProvider(this).get(DiscoverViewModel.class);
+//        this.activity = getActivity();
+        DiscoverViewModelFactory factory = new DiscoverViewModelFactory(
+                Injection.provideUseCaseHandler(),
+                Injection.provideGetAllTvSeriesUseCase()
+        );
+        discoverViewModel = new ViewModelProvider(this, factory).get(DiscoverViewModel.class);
         discoverAdapter = new DiscoverAdapter();
-        discoverAdapter.setOnItemClickListener(this);
     }
 
     @Override
@@ -58,11 +63,12 @@ public class DiscoverFragment extends Fragment implements DiscoverAdapter.OnItem
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(getView());
+        discoverAdapter.setOnItemClickListener(this);
         discoverRecyclerView.setAdapter(discoverAdapter);
+        discoverViewModel.loadAllTvSeries();
         discoverViewModel.getDiscoverListObservable().observe(getViewLifecycleOwner(), new Observer<List<TvSeries>>() {
                     @Override
                     public void onChanged(List<TvSeries> tvSeries) {

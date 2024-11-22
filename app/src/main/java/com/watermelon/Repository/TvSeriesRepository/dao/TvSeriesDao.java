@@ -38,6 +38,9 @@ public interface TvSeriesDao {
     @Query("UPDATE tv_series_table SET tv_series_flag=0 WHERE tv_series_api_id IN(:id)")
     void removeTvSeriesFromWatchlist(int id);
 
+    @Query("SELECT * FROM tv_series_table")
+    List<TvSeries> getAllTvSeries();
+
     @Query("SELECT * FROM tv_series_table WHERE tv_series_id=:Id")
     TvSeries getTvSeriesById(int Id);
 

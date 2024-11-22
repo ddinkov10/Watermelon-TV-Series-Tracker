@@ -136,17 +136,17 @@ public class DetailsViewModel extends ViewModel {
                 }
             });
         }
-        useCaseHandler.execute(changeEpisodeWatchedFlagUseCase, new ChangeEpisodeWatchedFlagUseCase.RequestValues(params), new UseCaseHandler.UseCaseCallback<ChangeEpisodeWatchedFlagUseCase.ResponseValue>() {
-            @Override
-            public void onSuccess(ChangeEpisodeWatchedFlagUseCase.ResponseValue response) {
-
-            }
-
-            @Override
-            public void onError(Exception exception) {
-
-            }
-        });
+//        useCaseHandler.execute(changeEpisodeWatchedFlagUseCase, new ChangeEpisodeWatchedFlagUseCase.RequestValues(params), new UseCaseHandler.UseCaseCallback<ChangeEpisodeWatchedFlagUseCase.ResponseValue>() {
+//            @Override
+//            public void onSuccess(ChangeEpisodeWatchedFlagUseCase.ResponseValue response) {
+//
+//            }
+//
+//            @Override
+//            public void onError(Exception exception) {
+//
+//            }
+//        });
     }
 
 
