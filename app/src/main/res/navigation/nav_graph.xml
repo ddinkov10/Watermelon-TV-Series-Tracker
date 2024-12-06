@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/navigation_watchlist">
+    app:startDestination="@id/watchlistFragment">
 
     <fragment
         android:id="@+id/navigation_statistics"
@@ -67,4 +67,8 @@
         android:label="fragment_episodes"
         tools:layout="@layout/episodes_fragment" >
     </fragment>
+    <fragment
+        android:id="@+id/watchlistFragment"
+        android:name="com.watermelon.UI.WatchlistCompose.WatchlistFragment"
+        android:label="WatchlistFragment" />
 </navigation>
